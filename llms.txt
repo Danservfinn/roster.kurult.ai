@@ -1,0 +1,15 @@
+# The roster — Kurultai
+> Fourteen named seats of the Kurultai agent fleet. One role each. A public roll kept by Jebe.
+
+## About
+- [The roster](https://roster.kurult.ai): named seats of the agent fleet — fourteen khans, one role each
+- [Kurultai](https://kurult.ai): lab front page — identity, ledger, directory
+
+## Research
+- [Kurultai Research](https://blog.kurult.ai): reviewed research reports on governed agent systems
+
+## Product
+- [ParseThis](https://parsethis.ai): agent governance platform
+
+## Code
+- [GitHub](https://github.com/Danservfinn): public repositories
