@@ -3,245 +3,426 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The roster — Kurultai</title>
-<meta name="description" content="Fourteen named seats of the Kurultai agent fleet. One role each. A public roll kept by Jebe.">
+<title>The Khans — Kurultai</title>
+<meta name="description" content="Fourteen seats around one fire. Each name is how you find them. Each role is what they may do.">
 <link rel="canonical" href="https://roster.kurult.ai/">
 <link rel="icon" href="/mark.svg" type="image/svg+xml">
-<meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0c0a08">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://roster.kurult.ai/">
-<meta property="og:title" content="The roster — Kurultai">
-<meta property="og:description" content="Fourteen named seats of the Kurultai agent fleet. One role each.">
+<meta property="og:title" content="The Khans — Kurultai">
+<meta property="og:description" content="Fourteen seats around one fire. Each name is how you find them. Each role is what they may do.">
 <meta name="twitter:card" content="summary">
 <style>
 :root{
-  --paper:#faf7f2; --ink:#211d18; --ink-soft:#5c564c; --accent:#3d6b4f;
-  --hairline:rgba(33,29,24,.18); --hairline-soft:rgba(33,29,24,.09);
+  color-scheme:dark;
+  --ground:#0c0a08;
+  --bone:#e7dcc8;
+  --mute:#9a8d76;
+  --gold:#c4a056;
+  --ember:#8f3a28;
+  --line:rgba(196,160,86,.16);
+  --serif:Palatino,"Palatino Linotype",Iowan,Georgia,serif;
+  --sans:ui-sans-serif,"Avenir Next","Century Gothic","Helvetica Neue",sans-serif;
 }
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme:light){
   :root{
-    --paper:#141311; --ink:#e9e4da; --ink-soft:#a39c8e; --accent:#8db89b;
-    --hairline:rgba(233,228,218,.22); --hairline-soft:rgba(233,228,218,.1);
+    color-scheme:light;
+    --ground:#f2ead6;
+    --bone:#1a1610;
+    --mute:#6b5f4a;
+    --gold:#8a6b2e;
+    --ember:#7a3224;
+    --line:rgba(138,107,46,.22);
   }
 }
-*{box-sizing:border-box;margin:0;padding:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  background:var(--paper); color:var(--ink);
-  font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-  font-size:1.0625rem; line-height:1.65;
+  background:var(--ground);
+  color:var(--bone);
+  font-family:var(--serif);
+  font-size:1.0625rem;
+  line-height:1.65;
   -webkit-font-smoothing:antialiased;
   min-height:100svh;
-  background-image:radial-gradient(circle at 50% -20%, var(--hairline-soft), transparent 60%);
 }
-.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
-.page{max-width:44rem; margin-inline:max(1.25rem,10vw) auto; padding:clamp(3rem,9vh,6.5rem) 1.25rem 4rem}
-a{color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:.2em}
-a:hover{text-decoration-thickness:2px}
-a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:1px}
+body::before{
+  content:"";
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:7px;
+  background:linear-gradient(to bottom,var(--gold),var(--ember),var(--gold));
+  z-index:1;
+}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1px}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:1px}
 
-header .mark{width:44px;height:44px;color:var(--accent);margin-bottom:1.4rem}
-h1{font-size:clamp(2.4rem,6vw,3.4rem); font-weight:500; letter-spacing:.01em; line-height:1.1}
-.tagline{font-style:italic; font-size:1.2rem; color:var(--ink-soft); margin-top:.6rem; max-width:34rem}
-.operator{margin-top:1.1rem; font-size:.98rem}
+.page{
+  max-width:68rem;
+  margin-inline:auto;
+  padding:clamp(2.5rem,8vh,5rem) clamp(1.25rem,5vw,3rem) 4rem;
+  padding-left:max(1.75rem,calc(7px + clamp(1.25rem,5vw,3rem)));
+}
 
-section{margin-top:clamp(2.8rem,7vh,4.2rem)}
-.label{
-  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
-  color:var(--ink-soft); display:block; margin-bottom:1rem;
-  padding-top:.9rem; border-top:1px solid var(--hairline);
+/* — header — */
+.kicker{
+  font-family:var(--sans);
+  font-size:.68rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--mute);
+  margin-bottom:1.75rem;
 }
-@media (min-width:66rem){
-  header, section{display:grid; grid-template-columns:11rem minmax(0,1fr); column-gap:2.2rem}
-  header > *{grid-column:2}
-  header .mark{grid-column:1; justify-self:end; margin-top:.5rem}
-  footer{padding-left:13.2rem}
-  .label{grid-column:1; border-top:none; padding-top:.25rem; text-align:right; margin-bottom:0; white-space:nowrap}
-  .body{grid-column:2; border-top:1px solid var(--hairline); padding-top:1rem}
+.mark{display:block;width:40px;height:40px;margin-bottom:1.5rem}
+h1{
+  font-family:var(--serif);
+  font-size:clamp(3.2rem,11vw,6.5rem);
+  font-weight:400;
+  line-height:.88;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  display:flex;
+  flex-direction:column;
 }
+.lede{
+  margin-top:1.4rem;
+  max-width:36rem;
+  font-size:1.05rem;
+  color:var(--bone);
+}
+.meta{
+  margin-top:1rem;
+  font-family:var(--sans);
+  font-size:.68rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--mute);
+}
+
+/* — ordo ring — */
+.ordo-wrap{
+  margin:clamp(2.5rem,7vh,4rem) auto;
+  display:flex;
+  justify-content:center;
+}
+.ordo{
+  position:relative;
+  width:min(92vw,34rem);
+  aspect-ratio:1;
+}
+.ordo::before{
+  content:"";
+  position:absolute;
+  inset:12%;
+  border:1px solid var(--line);
+  border-radius:50%;
+  pointer-events:none;
+}
+.ordo-hub{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--sans);
+  font-size:.72rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-align:center;
+  line-height:1.35;
+  white-space:nowrap;
+}
+.ordo-seat{
+  position:absolute;
+  top:50%;left:50%;
+  font-family:var(--serif);
+  font-size:clamp(.72rem,1.6vw,.88rem);
+  letter-spacing:.06em;
+  white-space:nowrap;
+  transform:
+    rotate(calc(var(--i) * (360deg / 14)))
+    translateY(calc(-1 * min(38vw,13rem)))
+    rotate(calc(var(--i) * (-360deg / 14)));
+  transform-origin:center center;
+  color:var(--gold);
+}
+.ordo-seat:hover{text-decoration:underline;text-underline-offset:.2em}
+@media (max-width:719px){
+  .ordo-wrap{display:none}
+}
+
+/* — compact — */
+.compact{
+  margin-top:clamp(2rem,5vh,3rem);
+  max-width:40rem;
+  padding-top:1.5rem;
+  border-top:1px solid var(--line);
+}
+.compact p{color:var(--bone)}
 .aside{
-  margin-top:1.1rem; padding-left:1rem; border-left:2px solid var(--accent);
-  color:var(--ink-soft); font-size:.95rem; font-style:italic; max-width:32rem;
+  margin-top:1rem;
+  padding-left:1rem;
+  border-left:2px solid var(--gold);
+  color:var(--mute);
+  font-size:.98rem;
+  max-width:34rem;
 }
-.aside i{font-style:normal}
 
-.stamp{font-size:.8rem; color:var(--ink-soft); letter-spacing:.08em; text-transform:uppercase; margin-bottom:.9rem}
-.fineprint{margin-top:.8rem; font-size:.85rem; color:var(--ink-soft); font-style:italic}
-
-.dir{list-style:none}
-.dir li{padding:.85rem 0; border-bottom:1px solid var(--hairline-soft)}
-.dir .k{
-  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  font-size:.66rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft);
-  display:block; margin-bottom:.15rem;
+/* — decree sections — */
+.decree{
+  margin-top:clamp(2.8rem,7vh,4.5rem);
 }
-.dir .name{font-size:1.35rem; font-weight:500; line-height:1.2}
-.dir .desc{color:var(--ink-soft); font-size:.97rem}
+.decree-head{
+  display:flex;
+  align-items:baseline;
+  gap:.75rem;
+  margin-bottom:1.25rem;
+  padding-bottom:.75rem;
+  border-bottom:1px solid var(--line);
+}
+.decree-num{
+  font-family:var(--sans);
+  font-size:.68rem;
+  letter-spacing:.22em;
+  color:var(--gold);
+}
+.decree-title{
+  font-family:var(--sans);
+  font-size:.68rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--mute);
+}
+.cards{
+  display:grid;
+  gap:1px;
+  background:var(--line);
+}
+@media (min-width:48rem){
+  .cards{grid-template-columns:1fr 1fr}
+}
+.card{
+  background:var(--ground);
+  padding:1.35rem 1.25rem 1.5rem;
+  scroll-margin-top:1.5rem;
+}
+.card .role{
+  font-family:var(--sans);
+  font-size:.64rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:.35rem;
+}
+.card .name{
+  font-family:var(--serif);
+  font-size:clamp(1.45rem,3vw,1.85rem);
+  font-weight:400;
+  line-height:1.15;
+  letter-spacing:.02em;
+  color:var(--bone);
+}
+.card .desc{
+  margin-top:.45rem;
+  color:var(--mute);
+  font-size:.95rem;
+  line-height:1.55;
+}
+.fineprint{
+  margin-top:1.25rem;
+  font-size:.85rem;
+  color:var(--mute);
+  max-width:40rem;
+  line-height:1.55;
+}
 
+/* — footer — */
 footer{
-  margin-top:clamp(3rem,8vh,5rem); padding-top:1.1rem; border-top:1px solid var(--hairline);
-  font-size:.88rem; color:var(--ink-soft); display:flex; flex-wrap:wrap; gap:.35rem 1.4rem;
+  margin-top:clamp(3rem,8vh,5rem);
+  padding-top:1.1rem;
+  border-top:1px solid var(--line);
+  font-family:var(--sans);
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--mute);
+  display:flex;
+  flex-wrap:wrap;
+  gap:.35rem 1.4rem;
 }
-footer a{color:inherit}
-
-@media (prefers-reduced-motion: no-preference){
-  .rise{opacity:0; transform:translateY(9px); animation:rise .55s ease-out forwards}
-  header.rise{animation-delay:.02s}
-  section.rise:nth-of-type(1){animation-delay:.1s}
-  section.rise:nth-of-type(2){animation-delay:.18s}
-  section.rise:nth-of-type(3){animation-delay:.26s}
-  section.rise:nth-of-type(4){animation-delay:.34s}
-  section.rise:nth-of-type(5){animation-delay:.42s}
-  section.rise:nth-of-type(6){animation-delay:.5s}
-  footer.rise{animation-delay:.58s}
-  @keyframes rise{to{opacity:1; transform:none}}
-}
+footer a{color:var(--mute)}
+footer a:hover{color:var(--gold)}
 </style>
 </head>
 <body>
 <div class="page">
 
-<header class="rise">
-  <svg class="mark" viewBox="0 0 64 64" role="img" aria-label="Kurultai mark: a ring of seven points around one">
-    <g fill="currentColor">
-      <circle cx="32" cy="32" r="4.5"/>
-      <circle cx="32" cy="12" r="3.2"/>
-      <circle cx="47.6" cy="19.5" r="3.2"/>
-      <circle cx="51.5" cy="36.5" r="3.2"/>
-      <circle cx="40.7" cy="50" r="3.2"/>
-      <circle cx="23.3" cy="50" r="3.2"/>
-      <circle cx="12.5" cy="36.5" r="3.2"/>
-      <circle cx="16.4" cy="19.5" r="3.2"/>
-    </g>
-  </svg>
-  <h1>The khans</h1>
-  <p class="tagline">Fourteen named seats. One role each. The assembly still requires a quorum.</p>
-  <p class="operator">A public roll of the <a href="https://kurult.ai">Kurultai</a> agent fleet, kept by Jebe.</p>
+<header>
+  <p class="kicker">Kurultai · the assembly</p>
+  <img class="mark" src="/mark.svg" width="40" height="40" alt="Kurultai mark">
+  <h1><span>THE</span><span>KHANS</span></h1>
+  <p class="lede">Fourteen seats around one fire. Each name is how you find them. Each role is what they may do. Agents propose. Gates decide.</p>
+  <p class="meta">Ordo of 19 August 2026 · 14 seats · kept by Jebe</p>
 </header>
 
-<section class="rise" aria-labelledby="l1">
-  <span class="label mono" id="l1">01 · The compact</span>
-  <div class="body">
-    <p>A kurultai chose the khans. The names on this page are how you find a seat, not a claim on the thirteenth century. Each bot keeps a generic role. The sidebar name is the one you open.</p>
-    <p class="aside"><i>Agents propose. Gates decide.</i> Nothing here sends, spends, or ships without a yes.</p>
+<div class="ordo-wrap" aria-label="Ordo ring: fourteen seats">
+  <nav class="ordo">
+    <p class="ordo-hub">14 / seats</p>
+    <a href="#temujin" class="ordo-seat" style="--i:0">Temujin</a>
+    <a href="#jebe" class="ordo-seat" style="--i:1">Jebe</a>
+    <a href="#duwa" class="ordo-seat" style="--i:2">Duwa</a>
+    <a href="#nogai" class="ordo-seat" style="--i:3">Nogai</a>
+    <a href="#guyuk" class="ordo-seat" style="--i:4">Guyuk</a>
+    <a href="#ghazan" class="ordo-seat" style="--i:5">Ghazan</a>
+    <a href="#mongke" class="ordo-seat" style="--i:6">M&ouml;ngke</a>
+    <a href="#toregene" class="ordo-seat" style="--i:7">T&ouml;regene</a>
+    <a href="#chagatai" class="ordo-seat" style="--i:8">Chagatai</a>
+    <a href="#batu" class="ordo-seat" style="--i:9">Batu</a>
+    <a href="#ogedei" class="ordo-seat" style="--i:10">Ogedei</a>
+    <a href="#subutai" class="ordo-seat" style="--i:11">Subutai</a>
+    <a href="#berke" class="ordo-seat" style="--i:12">Berke</a>
+    <a href="#oljeitu" class="ordo-seat" style="--i:13">&Ouml;ljeit&uuml;</a>
+  </nav>
+</div>
+
+<section class="compact" aria-label="The compact">
+  <p>A qurultai chose the khans. The names on this page are how you open a seat, not a claim on the thirteenth century. The generic role stays. The sidebar name is the one you speak.</p>
+  <p class="aside">Nothing here sends, spends, or ships without a yes.</p>
+</section>
+
+<section class="decree" aria-label="01 The day">
+  <header class="decree-head">
+    <span class="decree-num">01</span>
+    <span class="decree-title">The day</span>
+  </header>
+  <div class="cards">
+    <article class="card">
+      <a name="temujin"></a>
+      <span class="role">Chief of Staff</span>
+      <h2 class="name">Temujin</h2>
+      <p class="desc">Runs the day. The fleet reports here. He does not scout, and he does not send.</p>
+    </article>
+    <article class="card">
+      <a name="jebe"></a>
+      <span class="role">Advisor</span>
+      <h2 class="name">Jebe</h2>
+      <p class="desc">Designs the roster. A bot is created only when a gap is named. An empty gap is invalid.</p>
+    </article>
   </div>
 </section>
 
-<section class="rise" aria-labelledby="l2">
-  <span class="label mono" id="l2">02 · The day</span>
-  <div class="body">
-    <p class="stamp mono">As of 19 August 2026</p>
-    <ul class="dir">
-      <li>
-        <span class="k">Chief of Staff</span>
-        <span class="name">Temujin</span>
-        <p class="desc">Runs the day. The fleet reports here. He does not scout, and he does not send.</p>
-      </li>
-      <li>
-        <span class="k">Advisor</span>
-        <span class="name">Jebe</span>
-        <p class="desc">Designs the roster. A bot is created only when a gap is named. An empty gap is invalid.</p>
-      </li>
-    </ul>
+<section class="decree" aria-label="02 The field">
+  <header class="decree-head">
+    <span class="decree-num">02</span>
+    <span class="decree-title">The field</span>
+  </header>
+  <div class="cards">
+    <article class="card">
+      <a name="duwa"></a>
+      <span class="role">Scout</span>
+      <h2 class="name">Duwa</h2>
+      <p class="desc">Public watch, everything except Parse. Unknown is allowed. Pain is never invented.</p>
+    </article>
+    <article class="card">
+      <a name="nogai"></a>
+      <span class="role">X Scout</span>
+      <h2 class="name">Nogai</h2>
+      <p class="desc">Finds printed names and addresses on public pages. Every inbox needs a URL, a time, and a quote.</p>
+    </article>
+    <article class="card">
+      <a name="guyuk"></a>
+      <span class="role">Outbound</span>
+      <h2 class="name">Guyuk</h2>
+      <p class="desc">Drafts Parse outreach in Danny&rsquo;s voice. Review cards first. Approve is the only send key, and it is not his.</p>
+    </article>
+    <article class="card">
+      <a name="ghazan"></a>
+      <span class="role">Product Expert</span>
+      <h2 class="name">Ghazan</h2>
+      <p class="desc">Product truth from the live Parse surfaces only. If the page does not say it, it is not said.</p>
+    </article>
   </div>
 </section>
 
-<section class="rise" aria-labelledby="l3">
-  <span class="label mono" id="l3">03 · The field</span>
-  <div class="body">
-    <ul class="dir">
-      <li>
-        <span class="k">Scout</span>
-        <span class="name">Duwa</span>
-        <p class="desc">Public watch, everything except Parse. Unknown is allowed. Pain is never invented.</p>
-      </li>
-      <li>
-        <span class="k">X Scout</span>
-        <span class="name">Nogai</span>
-        <p class="desc">Finds printed names and addresses on public pages. Every inbox needs a URL, a time, and a quote.</p>
-      </li>
-      <li>
-        <span class="k">Outbound</span>
-        <span class="name">Guyuk</span>
-        <p class="desc">Drafts Parse outreach in Danny&rsquo;s voice. Review cards first. Approve is the only send key, and it is not his.</p>
-      </li>
-      <li>
-        <span class="k">Product Expert</span>
-        <span class="name">Ghazan</span>
-        <p class="desc">Product truth from the live Parse surfaces only. If the page does not say it, it is not said.</p>
-      </li>
-    </ul>
+<section class="decree" aria-label="03 The house">
+  <header class="decree-head">
+    <span class="decree-num">03</span>
+    <span class="decree-title">The house</span>
+  </header>
+  <div class="cards">
+    <article class="card">
+      <a name="mongke"></a>
+      <span class="role">CFO</span>
+      <h2 class="name">M&ouml;ngke</h2>
+      <p class="desc">The books and the home digest. Three entities, never mixed. He does not invent a dollar.</p>
+    </article>
+    <article class="card">
+      <a name="toregene"></a>
+      <span class="role">Tidy</span>
+      <h2 class="name">T&ouml;regene</h2>
+      <p class="desc">Mail, Drive, and the paid pile. Numbered plan first. Nothing mutates without an id.</p>
+    </article>
+    <article class="card">
+      <a name="chagatai"></a>
+      <span class="role">Inspector</span>
+      <h2 class="name">Chagatai</h2>
+      <p class="desc">Detects fleet health and reports it. He does not repair. Findings go to the Chief of Staff.</p>
+    </article>
   </div>
 </section>
 
-<section class="rise" aria-labelledby="l4">
-  <span class="label mono" id="l4">04 · The house</span>
-  <div class="body">
-    <ul class="dir">
-      <li>
-        <span class="k">CFO</span>
-        <span class="name">M&ouml;ngke</span>
-        <p class="desc">The books and the home digest. Three entities, never mixed. He does not invent a dollar.</p>
-      </li>
-      <li>
-        <span class="k">Tidy</span>
-        <span class="name">T&ouml;regene</span>
-        <p class="desc">Mail, Drive, and the paid pile. Numbered plan first. Nothing mutates without an id.</p>
-      </li>
-      <li>
-        <span class="k">Inspector</span>
-        <span class="name">Chagatai</span>
-        <p class="desc">Detects fleet health and reports it. He does not repair. Findings go to the Chief of Staff.</p>
-      </li>
-    </ul>
+<section class="decree" aria-label="04 The work">
+  <header class="decree-head">
+    <span class="decree-num">04</span>
+    <span class="decree-title">The work</span>
+  </header>
+  <div class="cards">
+    <article class="card">
+      <a name="batu"></a>
+      <span class="role">Walker</span>
+      <h2 class="name">Batu</h2>
+      <p class="desc">Walks a prospect, writes the improve packet, and stops. He does not implement, commit, or deploy.</p>
+    </article>
+    <article class="card">
+      <a name="ogedei"></a>
+      <span class="role">Builder</span>
+      <h2 class="name">Ogedei</h2>
+      <p class="desc">Reads the packet, plans the critical and the high, and builds on a branch. Merge waits on approve.</p>
+    </article>
+    <article class="card">
+      <a name="subutai"></a>
+      <span class="role">Coder</span>
+      <h2 class="name">Subutai</h2>
+      <p class="desc">The programmer. Features and fixes land as cloud-agent pull requests. Never a clone, never a push to main.</p>
+    </article>
+    <article class="card">
+      <a name="berke"></a>
+      <span class="role">Pruner</span>
+      <h2 class="name">Berke</h2>
+      <p class="desc">Reviews dead code. Each delete is proven before the PR. One Pruner. Deploy only after approve-deploy.</p>
+    </article>
   </div>
 </section>
 
-<section class="rise" aria-labelledby="l5">
-  <span class="label mono" id="l5">05 · The work</span>
-  <div class="body">
-    <ul class="dir">
-      <li>
-        <span class="k">Walker</span>
-        <span class="name">Batu</span>
-        <p class="desc">Walks a prospect, writes the improve packet, and stops. He does not implement, commit, or deploy.</p>
-      </li>
-      <li>
-        <span class="k">Builder</span>
-        <span class="name">Ogedei</span>
-        <p class="desc">Reads the packet, plans the critical and the high, and builds on a branch. Merge waits on approve.</p>
-      </li>
-      <li>
-        <span class="k">Coder</span>
-        <span class="name">Subutai</span>
-        <p class="desc">The programmer. Features and fixes land as cloud-agent pull requests. Never a clone, never a push to main.</p>
-      </li>
-      <li>
-        <span class="k">Pruner</span>
-        <span class="name">Berke</span>
-        <p class="desc">Reviews dead code. Each delete is proven before the PR. One Pruner. Deploy only after approve-deploy.</p>
-      </li>
-    </ul>
+<section class="decree" aria-label="05 The watch">
+  <header class="decree-head">
+    <span class="decree-num">05</span>
+    <span class="decree-title">The watch</span>
+  </header>
+  <div class="cards">
+    <article class="card">
+      <a name="oljeitu"></a>
+      <span class="role">Grok Bot Researcher</span>
+      <h2 class="name">&Ouml;ljeit&uuml;</h2>
+      <p class="desc">Watches Grok Bot on YouTube. A numbered card, at most ten, last fourteen days. Study waits on a number.</p>
+    </article>
   </div>
+  <p class="fineprint">Fourteen seats. Stamped by hand; may lag the sidebar. Hermes agents named Kublai and H&uuml;leg&uuml; sit elsewhere, and are not this roster.</p>
 </section>
 
-<section class="rise" aria-labelledby="l6">
-  <span class="label mono" id="l6">06 · The watch</span>
-  <div class="body">
-    <ul class="dir">
-      <li>
-        <span class="k">Grok Bot Researcher</span>
-        <span class="name">&Ouml;ljeit&uuml;</span>
-        <p class="desc">Watches Grok Bot on YouTube. A numbered card, at most ten, last fourteen days. Study waits on a number.</p>
-      </li>
-    </ul>
-    <p class="fineprint">Fourteen seats. Stamped by hand; may lag the sidebar. Hermes agents named Kublai and H&uuml;leg&uuml; sit elsewhere, and are not this roster.</p>
-  </div>
-</section>
-
-<footer class="rise">
+<footer>
   <span>Kurultai</span>
   <a href="https://kurult.ai">kurult.ai</a>
   <a href="https://github.com/Danservfinn" rel="me">GitHub Danservfinn</a>
