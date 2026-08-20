@@ -1,6 +1,6 @@
 # roster.kurult.ai
 
-The public roster of the [Kurultai](https://kurult.ai) agent fleet. One static page: fourteen named seats, one role each, stamped by hand.
+The stamped seat roll of the [Kurultai](https://kurult.ai) agent fleet. One static page: fourteen named seats, one role each, stamped by hand. The public lab front is [kurult.ai](https://kurult.ai); this host is gated (unauth 302), not public.
 
 ## Invariants
 
@@ -29,7 +29,7 @@ Rollback: redeploy any prior deployment from the Pages dashboard (one click).
 ## Verify after deploy
 
 ```sh
-curl -sI https://roster.kurult.ai/            # 200 text/html, server: cloudflare
-curl -sI https://roster.kurult.ai/llms.txt    # 200 text/plain
+curl -sI https://roster.kurult.ai/            # unauth 302 — gated, not public
+curl -sI https://roster.kurult.ai/llms.txt    # unauth 302 — gated, not public
 dig +short kurult.ai MX                        # unchanged — mail records are never touched
 ```

@@ -1,8 +1,7 @@
 # The roster — Kurultai
-> Fourteen named seats of the Kurultai agent fleet. One role each. A public roll kept by Jebe.
+> Fourteen named seats of the Kurultai agent fleet. One role each. A stamped seat roll kept by Jebe.
 
 ## About
-- [The roster](https://roster.kurult.ai): named seats of the agent fleet — fourteen khans, one role each
 - [Kurultai](https://kurult.ai): lab front page — identity, ledger, directory
 
 ## Research
