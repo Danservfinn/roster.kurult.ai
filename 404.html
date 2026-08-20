@@ -5,16 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>This seat is empty — Kurultai</title>
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#05070A">
+<meta name="theme-color" content="#f6f4f0">
 <link rel="icon" href="/mark.svg" type="image/svg+xml">
 <style>
 :root{
-  color-scheme:dark;
-  --void:#05070A;
-  --ink:#F4F1EA;
-  --muted:#7A7468;
-  --gold:#E8A317;
-  --gold-line:rgba(196,163,90,0.35);
+  color-scheme:light;
+  --paper:#f6f4f0;
+  --panel:#ffffff;
+  --ink:#161411;
+  --ink-dim:#3d3a35;
+  --mute:#5c574e;
+  --line:#e4dfd6;
+  --gold:#8f6d1f;
+  --gold-line:#d4c4a0;
+  --ok:#0a6b4a;
+  --hold:#9a5b00;
+  --no:#b42318;
+  --ember:#9a3d2c;
   --font-d:ui-sans-serif,"Avenir Next","Segoe UI",system-ui,sans-serif;
   --font-m:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
@@ -23,34 +30,28 @@
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
 body{
-  background:var(--void);
+  background:var(--paper);
   color:var(--ink);
   font-family:var(--font-d);
+  font-size:1.0625rem;
   min-height:100svh;
   display:grid;
   place-content:center;
   text-align:center;
-  line-height:1.65;
-  padding:2rem;
-  position:relative;
+  line-height:1.6;
+  padding:clamp(1.5rem,4vh,2.5rem) clamp(1.25rem,3vw,2.5rem);
 }
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.03;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(244,241,234,.8), transparent),
-    radial-gradient(1px 1px at 70% 60%, rgba(244,241,234,.6), transparent),
-    radial-gradient(1px 1px at 40% 80%, rgba(244,241,234,.5), transparent);
+.frame{
+  width:100%;
+  max-width:none;
+  background:var(--panel);
+  border:1px solid var(--line);
+  padding:2rem 1.5rem;
 }
-@media print{body::before{display:none}}
-.frame{position:relative;z-index:1;max-width:22rem}
 .kicker{
   font-family:var(--font-m);
-  font-size:10px;
-  letter-spacing:.18em;
+  font-size:12px;
+  letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--gold);
   margin-bottom:1.25rem;
@@ -65,8 +66,8 @@ a{
   color:var(--gold);
   text-decoration:none;
   font-family:var(--font-m);
-  font-size:10px;
-  letter-spacing:.16em;
+  font-size:12px;
+  letter-spacing:.12em;
   text-transform:uppercase;
   margin-top:1.75rem;
   display:inline-block;
@@ -74,7 +75,7 @@ a{
   border-top:1px solid var(--gold-line);
 }
 a:hover{text-decoration:underline;text-underline-offset:.25em}
-a:focus-visible{outline:1px solid var(--gold);outline-offset:3px}
+a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 </style>
 </head>
 <body>
