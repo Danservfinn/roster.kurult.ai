@@ -7,105 +7,242 @@
 <meta name="description" content="Fourteen seats around one fire. Each name is how you find them. Each role is what they may do.">
 <link rel="canonical" href="https://roster.kurult.ai/">
 <link rel="icon" href="/mark.svg" type="image/svg+xml">
-<meta name="theme-color" content="#0c0a08">
+<meta name="theme-color" content="#05070A">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://roster.kurult.ai/">
 <meta property="og:title" content="The Khans — Kurultai">
 <meta property="og:description" content="Fourteen seats around one fire. Each name is how you find them. Each role is what they may do.">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Khans — Kurultai">
+<meta name="twitter:description" content="Fourteen seats around one fire. Each name is how you find them. Each role is what they may do.">
 <style>
 :root{
   color-scheme:dark;
-  --ground:#0c0a08;
-  --bone:#e7dcc8;
-  --mute:#9a8d76;
-  --gold:#c4a056;
-  --ember:#8f3a28;
-  --line:rgba(196,160,86,.16);
-  --serif:Palatino,"Palatino Linotype",Iowan,Georgia,serif;
-  --sans:ui-sans-serif,"Avenir Next","Century Gothic","Helvetica Neue",sans-serif;
+  --void:#05070A;
+  --field:#0A0E14;
+  --panel:#0E141C;
+  --ink:#F4F1EA;
+  --ink-dim:#B8B3A6;
+  --muted:#7A7468;
+  --gold:#E8A317;
+  --gold-soft:#C4A35A;
+  --gold-line:rgba(196,163,90,0.35);
+  --high:#C43A2A;
+  --line:rgba(244,241,234,0.08);
+  --font-d:ui-sans-serif,"Avenir Next","Segoe UI",system-ui,sans-serif;
+  --font-m:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --nav-h:56px;
+  --ease:ease;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation:none !important;
+    transition:none !important;
+  }
+  .hero,.ordo-wrap,.compact,.decree{opacity:1;transform:none}
+  .card:hover{transform:none}
+  .ordo-seat:hover{
+    transform:
+      rotate(calc(var(--i) * (360deg / var(--n))))
+      translateY(calc(-1 * min(34vw,11.25rem)))
+      rotate(calc(var(--i) * (-360deg / var(--n))));
+  }
+}
 body{
-  background:var(--ground);
-  color:var(--bone);
-  font-family:var(--serif);
-  font-size:1.0625rem;
+  background:var(--void);
+  color:var(--ink);
+  font-family:var(--font-d);
+  font-size:1rem;
+  font-weight:400;
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   min-height:100svh;
 }
+/* optional faint starfield / grain — CSS only */
 body::before{
   content:"";
   position:fixed;
-  left:0;top:0;bottom:0;
-  width:7px;
-  background:linear-gradient(to bottom,var(--gold),var(--ember),var(--gold));
-  z-index:1;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.035;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(244,241,234,.9), transparent),
+    radial-gradient(1px 1px at 28% 62%, rgba(244,241,234,.7), transparent),
+    radial-gradient(1px 1px at 44% 34%, rgba(244,241,234,.55), transparent),
+    radial-gradient(1px 1px at 61% 78%, rgba(244,241,234,.8), transparent),
+    radial-gradient(1px 1px at 73% 22%, rgba(244,241,234,.5), transparent),
+    radial-gradient(1px 1px at 86% 54%, rgba(244,241,234,.65), transparent),
+    radial-gradient(1px 1px at 8% 88%, rgba(244,241,234,.45), transparent),
+    radial-gradient(1px 1px at 52% 8%, rgba(244,241,234,.6), transparent),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.94 0 0 0 0 0.9 0 0 0 .4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size:auto,auto,auto,auto,auto,auto,auto,auto,160px 160px;
+  background-repeat:repeat;
+}
+@media print{
+  body::before{display:none}
 }
 a{color:var(--gold);text-decoration:none}
-a:hover{text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1px}
-a:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:1px}
-
-.page{
-  max-width:68rem;
-  margin-inline:auto;
-  padding:clamp(2.5rem,8vh,5rem) clamp(1.25rem,5vw,3rem) 4rem;
-  padding-left:max(1.75rem,calc(7px + clamp(1.25rem,5vw,3rem)));
+a:hover{text-decoration:underline;text-underline-offset:.2em}
+a:focus-visible,
+button:focus-visible,
+.ordo-seat:focus-visible,
+.card:focus-within{
+  outline:1px solid var(--gold);
+  outline-offset:3px;
 }
 
-/* — header — */
-.kicker{
-  font-family:var(--sans);
-  font-size:.68rem;
-  letter-spacing:.28em;
+.skip{
+  position:absolute;
+  left:-9999px;
+  top:auto;
+  width:1px;height:1px;
+  overflow:hidden;
+  z-index:100;
+  background:var(--void);
+  color:var(--gold);
+  font-family:var(--font-m);
+  font-size:11px;
+  letter-spacing:.16em;
   text-transform:uppercase;
-  color:var(--mute);
-  margin-bottom:1.75rem;
+  padding:.75rem 1rem;
 }
-.mark{display:block;width:40px;height:40px;margin-bottom:1.5rem}
-h1{
-  font-family:var(--serif);
-  font-size:clamp(3.2rem,11vw,6.5rem);
-  font-weight:400;
-  line-height:.88;
+.skip:focus{
+  left:1rem;top:1rem;
+  width:auto;height:auto;
+  outline:1px solid var(--gold);
+  outline-offset:2px;
+}
+
+/* — sticky chrome — */
+.site-nav{
+  position:sticky;
+  top:0;
+  z-index:40;
+  height:var(--nav-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1rem;
+  padding:0 clamp(1rem,4vw,2rem);
+  background:rgba(5,7,10,.82);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--gold-line);
+}
+.brand{
+  font-family:var(--font-m);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-decoration:none;
+  white-space:nowrap;
+}
+.brand:hover{text-decoration:none;color:var(--gold)}
+.nav-links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:.35rem .9rem;
+  list-style:none;
+}
+.nav-links a{
+  font-family:var(--font-m);
+  font-size:10px;
   letter-spacing:.14em;
   text-transform:uppercase;
+  color:var(--ink-dim);
+  text-decoration:none;
+}
+.nav-links a:hover{color:var(--gold);text-decoration:none}
+@media (max-width:560px){
+  .nav-links{display:none}
+}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width:68rem;
+  margin-inline:auto;
+  padding:0 clamp(1rem,4vw,2rem) 4rem;
+}
+
+/* — hero — */
+.hero{
+  min-height:calc(100svh - var(--nav-h));
   display:flex;
   flex-direction:column;
+  justify-content:center;
+  padding:clamp(2.5rem,8vh,4.5rem) 0 clamp(2rem,6vh,3.5rem);
+  animation:rise .7s var(--ease) both;
+}
+@keyframes rise{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.kicker{
+  font-family:var(--font-m);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:1.5rem;
+}
+.mark{
+  display:block;
+  width:28px;height:28px;
+  margin-bottom:1.35rem;
+  opacity:.9;
+}
+.hero h1{
+  font-family:var(--font-d);
+  font-size:clamp(2rem,5vw,3.4rem);
+  font-weight:500;
+  letter-spacing:-0.03em;
+  line-height:1.15;
+  color:var(--ink);
+  max-width:18ch;
+  text-transform:none;
 }
 .lede{
-  margin-top:1.4rem;
+  margin-top:1.35rem;
   max-width:36rem;
   font-size:1.05rem;
-  color:var(--bone);
+  font-weight:400;
+  color:var(--ink-dim);
+  line-height:1.7;
 }
 .meta{
-  margin-top:1rem;
-  font-family:var(--sans);
-  font-size:.68rem;
-  letter-spacing:.2em;
+  margin-top:1.25rem;
+  font-family:var(--font-m);
+  font-size:10px;
+  letter-spacing:.16em;
   text-transform:uppercase;
-  color:var(--mute);
+  color:var(--muted);
 }
 
 /* — ordo ring — */
 .ordo-wrap{
-  margin:clamp(2.5rem,7vh,4rem) auto;
+  margin:clamp(1.5rem,5vh,3rem) auto 0;
   display:flex;
   justify-content:center;
+  animation:rise .7s var(--ease) .08s both;
 }
 .ordo{
+  --n:14;
   position:relative;
-  width:min(92vw,34rem);
+  width:min(88vw,30rem);
   aspect-ratio:1;
 }
 .ordo::before{
   content:"";
   position:absolute;
-  inset:12%;
-  border:1px solid var(--line);
+  inset:14%;
+  border:1px solid var(--gold-line);
   border-radius:50%;
   pointer-events:none;
 }
@@ -113,188 +250,222 @@ h1{
   position:absolute;
   top:50%;left:50%;
   transform:translate(-50%,-50%);
-  font-family:var(--sans);
-  font-size:.72rem;
-  letter-spacing:.16em;
+  font-family:var(--font-m);
+  font-size:10px;
+  letter-spacing:.18em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-soft);
   text-align:center;
-  line-height:1.35;
-  white-space:nowrap;
+  line-height:1.4;
 }
 .ordo-seat{
   position:absolute;
   top:50%;left:50%;
-  font-family:var(--serif);
-  font-size:clamp(.72rem,1.6vw,.88rem);
-  letter-spacing:.06em;
+  font-family:var(--font-m);
+  font-size:10px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
   white-space:nowrap;
+  color:var(--ink-dim);
+  text-decoration:none;
   transform:
-    rotate(calc(var(--i) * (360deg / 14)))
-    translateY(calc(-1 * min(38vw,13rem)))
-    rotate(calc(var(--i) * (-360deg / 14)));
+    rotate(calc(var(--i) * (360deg / var(--n))))
+    translateY(calc(-1 * min(34vw,11.25rem)))
+    rotate(calc(var(--i) * (-360deg / var(--n))));
   transform-origin:center center;
-  color:var(--gold);
+  transition:transform .2s var(--ease), color .2s var(--ease);
 }
-.ordo-seat:hover{text-decoration:underline;text-underline-offset:.2em}
+.ordo-seat:hover{
+  color:var(--gold);
+  text-decoration:none;
+  transform:
+    rotate(calc(var(--i) * (360deg / var(--n))))
+    translateY(calc(-1 * min(34vw,11.25rem)))
+    rotate(calc(var(--i) * (-360deg / var(--n))))
+    translateY(-2px);
+}
 @media (max-width:719px){
   .ordo-wrap{display:none}
 }
 
 /* — compact — */
 .compact{
-  margin-top:clamp(2rem,5vh,3rem);
-  max-width:40rem;
+  margin-top:clamp(2.5rem,7vh,4rem);
+  max-width:38rem;
   padding-top:1.5rem;
-  border-top:1px solid var(--line);
+  border-top:1px solid var(--gold-line);
+  animation:rise .7s var(--ease) .12s both;
 }
-.compact p{color:var(--bone)}
+.compact > p{color:var(--ink-dim)}
 .aside{
   margin-top:1rem;
   padding-left:1rem;
-  border-left:2px solid var(--gold);
-  color:var(--mute);
-  font-size:.98rem;
-  max-width:34rem;
+  border-left:1px solid var(--gold-line);
+  color:var(--muted);
+  font-size:.95rem;
 }
 
-/* — decree sections — */
+/* — decrees / exhibits — */
 .decree{
-  margin-top:clamp(2.8rem,7vh,4.5rem);
+  margin-top:clamp(2.75rem,7vh,4.5rem);
+  animation:rise .7s var(--ease) both;
 }
+.decree:nth-of-type(1){animation-delay:.14s}
+.decree:nth-of-type(2){animation-delay:.18s}
+.decree:nth-of-type(3){animation-delay:.22s}
+.decree:nth-of-type(4){animation-delay:.26s}
+.decree:nth-of-type(5){animation-delay:.3s}
 .decree-head{
   display:flex;
   align-items:baseline;
   gap:.75rem;
-  margin-bottom:1.25rem;
-  padding-bottom:.75rem;
+  margin-bottom:1.1rem;
+  padding-bottom:.7rem;
   border-bottom:1px solid var(--line);
 }
-.decree-num{
-  font-family:var(--sans);
-  font-size:.68rem;
-  letter-spacing:.22em;
-  color:var(--gold);
-}
+.decree-num,
 .decree-title{
-  font-family:var(--sans);
-  font-size:.68rem;
-  letter-spacing:.22em;
+  font-family:var(--font-m);
+  font-size:10px;
+  letter-spacing:.18em;
   text-transform:uppercase;
-  color:var(--mute);
 }
+.decree-num{color:var(--gold)}
+.decree-title{color:var(--muted)}
 .cards{
   display:grid;
-  gap:1px;
-  background:var(--line);
+  gap:1rem;
 }
 @media (min-width:48rem){
   .cards{grid-template-columns:1fr 1fr}
+  .cards.solo{grid-template-columns:1fr;max-width:calc(50% - .5rem)}
 }
 .card{
-  background:var(--ground);
-  padding:1.35rem 1.25rem 1.5rem;
-  scroll-margin-top:1.5rem;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-top:1px solid var(--gold-soft);
+  padding:1.35rem 1.25rem 1.45rem;
+  scroll-margin-top:calc(var(--nav-h) + 1rem);
+  transition:transform .2s var(--ease), border-color .2s var(--ease);
+}
+.card:hover{
+  transform:translateY(-2px);
+  border-color:rgba(244,241,234,.12);
+  border-top-color:var(--gold);
 }
 .card .role{
-  font-family:var(--sans);
-  font-size:.64rem;
-  letter-spacing:.22em;
+  font-family:var(--font-m);
+  font-size:10px;
+  letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--gold);
   display:block;
-  margin-bottom:.35rem;
+  margin-bottom:.45rem;
 }
 .card .name{
-  font-family:var(--serif);
-  font-size:clamp(1.45rem,3vw,1.85rem);
-  font-weight:400;
-  line-height:1.15;
-  letter-spacing:.02em;
-  color:var(--bone);
+  font-family:var(--font-d);
+  font-size:clamp(1.2rem,2.4vw,1.45rem);
+  font-weight:500;
+  letter-spacing:-0.02em;
+  line-height:1.2;
+  color:var(--ink);
 }
 .card .desc{
-  margin-top:.45rem;
-  color:var(--mute);
+  margin-top:.5rem;
+  color:var(--muted);
   font-size:.95rem;
-  line-height:1.55;
+  line-height:1.6;
 }
 .fineprint{
-  margin-top:1.25rem;
-  font-size:.85rem;
-  color:var(--mute);
+  margin-top:1.35rem;
+  font-size:.875rem;
+  color:var(--muted);
   max-width:40rem;
-  line-height:1.55;
+  line-height:1.6;
 }
 
 /* — footer — */
-footer{
+.site-foot{
   margin-top:clamp(3rem,8vh,5rem);
-  padding-top:1.1rem;
-  border-top:1px solid var(--line);
-  font-family:var(--sans);
-  font-size:.68rem;
+  padding:1.25rem 0 0;
+  border-top:1px solid var(--gold-line);
+  font-family:var(--font-m);
+  font-size:10px;
   letter-spacing:.14em;
   text-transform:uppercase;
-  color:var(--mute);
+  color:var(--muted);
   display:flex;
   flex-wrap:wrap;
-  gap:.35rem 1.4rem;
+  gap:.45rem 1.25rem;
 }
-footer a{color:var(--mute)}
-footer a:hover{color:var(--gold)}
+.site-foot a{color:var(--ink-dim)}
+.site-foot a:hover{color:var(--gold);text-decoration:none}
 </style>
 </head>
 <body>
-<div class="page">
+<a class="skip" href="#main">Skip to content</a>
 
-<header>
+<nav class="site-nav" aria-label="Primary">
+  <a class="brand" href="/">Kurultai · roster</a>
+  <ul class="nav-links">
+    <li><a href="#ring">Ring</a></li>
+    <li><a href="#day">Day</a></li>
+    <li><a href="#field">Field</a></li>
+    <li><a href="#house">House</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#watch">Watch</a></li>
+  </ul>
+</nav>
+
+<div class="wrap">
+
+<header class="hero">
   <p class="kicker">Kurultai · the assembly</p>
-  <img class="mark" src="/mark.svg" width="40" height="40" alt="Kurultai mark">
-  <h1><span>THE</span><span>KHANS</span></h1>
+  <img class="mark" src="/mark.svg" width="28" height="28" alt="Kurultai mark">
+  <h1>Named seats of the fleet.</h1>
   <p class="lede">Fourteen seats around one fire. Each name is how you find them. Each role is what they may do. Agents propose. Gates decide.</p>
-  <p class="meta">Ordo of 19 August 2026 · 14 seats · kept by Jebe</p>
+  <p class="meta">Ordo of 19 August 2026 · kept by Jebe</p>
+
+  <div class="ordo-wrap" id="ring" aria-label="Ordo ring: stamped seats">
+    <nav class="ordo" aria-label="Seat ring">
+      <p class="ordo-hub">ordo</p>
+      <a href="#temujin" class="ordo-seat" style="--i:0">Temujin</a>
+      <a href="#jebe" class="ordo-seat" style="--i:1">Jebe</a>
+      <a href="#duwa" class="ordo-seat" style="--i:2">Duwa</a>
+      <a href="#nogai" class="ordo-seat" style="--i:3">Nogai</a>
+      <a href="#guyuk" class="ordo-seat" style="--i:4">Guyuk</a>
+      <a href="#ghazan" class="ordo-seat" style="--i:5">Ghazan</a>
+      <a href="#mongke" class="ordo-seat" style="--i:6">M&ouml;ngke</a>
+      <a href="#toregene" class="ordo-seat" style="--i:7">T&ouml;regene</a>
+      <a href="#chagatai" class="ordo-seat" style="--i:8">Chagatai</a>
+      <a href="#batu" class="ordo-seat" style="--i:9">Batu</a>
+      <a href="#ogedei" class="ordo-seat" style="--i:10">Ogedei</a>
+      <a href="#subutai" class="ordo-seat" style="--i:11">Subutai</a>
+      <a href="#berke" class="ordo-seat" style="--i:12">Berke</a>
+      <a href="#oljeitu" class="ordo-seat" style="--i:13">&Ouml;ljeit&uuml;</a>
+    </nav>
+  </div>
 </header>
 
-<div class="ordo-wrap" aria-label="Ordo ring: fourteen seats">
-  <nav class="ordo">
-    <p class="ordo-hub">14 / seats</p>
-    <a href="#temujin" class="ordo-seat" style="--i:0">Temujin</a>
-    <a href="#jebe" class="ordo-seat" style="--i:1">Jebe</a>
-    <a href="#duwa" class="ordo-seat" style="--i:2">Duwa</a>
-    <a href="#nogai" class="ordo-seat" style="--i:3">Nogai</a>
-    <a href="#guyuk" class="ordo-seat" style="--i:4">Guyuk</a>
-    <a href="#ghazan" class="ordo-seat" style="--i:5">Ghazan</a>
-    <a href="#mongke" class="ordo-seat" style="--i:6">M&ouml;ngke</a>
-    <a href="#toregene" class="ordo-seat" style="--i:7">T&ouml;regene</a>
-    <a href="#chagatai" class="ordo-seat" style="--i:8">Chagatai</a>
-    <a href="#batu" class="ordo-seat" style="--i:9">Batu</a>
-    <a href="#ogedei" class="ordo-seat" style="--i:10">Ogedei</a>
-    <a href="#subutai" class="ordo-seat" style="--i:11">Subutai</a>
-    <a href="#berke" class="ordo-seat" style="--i:12">Berke</a>
-    <a href="#oljeitu" class="ordo-seat" style="--i:13">&Ouml;ljeit&uuml;</a>
-  </nav>
-</div>
+<main id="main">
 
 <section class="compact" aria-label="The compact">
   <p>A qurultai chose the khans. The names on this page are how you open a seat, not a claim on the thirteenth century. The generic role stays. The sidebar name is the one you speak.</p>
   <p class="aside">Nothing here sends, spends, or ships without a yes.</p>
 </section>
 
-<section class="decree" aria-label="01 The day">
+<section class="decree" id="day" aria-label="01 The day">
   <header class="decree-head">
     <span class="decree-num">01</span>
     <span class="decree-title">The day</span>
   </header>
   <div class="cards">
-    <article class="card">
-      <a name="temujin"></a>
+    <article class="card" id="temujin">
       <span class="role">Chief of Staff</span>
       <h2 class="name">Temujin</h2>
       <p class="desc">Runs the day. The fleet reports here. He does not scout, and he does not send.</p>
     </article>
-    <article class="card">
-      <a name="jebe"></a>
+    <article class="card" id="jebe">
       <span class="role">Advisor</span>
       <h2 class="name">Jebe</h2>
       <p class="desc">Designs the roster. A bot is created only when a gap is named. An empty gap is invalid.</p>
@@ -302,32 +473,28 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<section class="decree" aria-label="02 The field">
+<section class="decree" id="field" aria-label="02 The field">
   <header class="decree-head">
     <span class="decree-num">02</span>
     <span class="decree-title">The field</span>
   </header>
   <div class="cards">
-    <article class="card">
-      <a name="duwa"></a>
+    <article class="card" id="duwa">
       <span class="role">Scout</span>
       <h2 class="name">Duwa</h2>
       <p class="desc">Public watch, everything except Parse. Unknown is allowed. Pain is never invented.</p>
     </article>
-    <article class="card">
-      <a name="nogai"></a>
+    <article class="card" id="nogai">
       <span class="role">X Scout</span>
       <h2 class="name">Nogai</h2>
       <p class="desc">Finds printed names and addresses on public pages. Every inbox needs a URL, a time, and a quote.</p>
     </article>
-    <article class="card">
-      <a name="guyuk"></a>
+    <article class="card" id="guyuk">
       <span class="role">Outbound</span>
       <h2 class="name">Guyuk</h2>
       <p class="desc">Drafts Parse outreach in Danny&rsquo;s voice. Review cards first. Approve is the only send key, and it is not his.</p>
     </article>
-    <article class="card">
-      <a name="ghazan"></a>
+    <article class="card" id="ghazan">
       <span class="role">Product Expert</span>
       <h2 class="name">Ghazan</h2>
       <p class="desc">Product truth from the live Parse surfaces only. If the page does not say it, it is not said.</p>
@@ -335,26 +502,23 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<section class="decree" aria-label="03 The house">
+<section class="decree" id="house" aria-label="03 The house">
   <header class="decree-head">
     <span class="decree-num">03</span>
     <span class="decree-title">The house</span>
   </header>
   <div class="cards">
-    <article class="card">
-      <a name="mongke"></a>
+    <article class="card" id="mongke">
       <span class="role">CFO</span>
       <h2 class="name">M&ouml;ngke</h2>
       <p class="desc">The books and the home digest. Three entities, never mixed. He does not invent a dollar.</p>
     </article>
-    <article class="card">
-      <a name="toregene"></a>
+    <article class="card" id="toregene">
       <span class="role">Tidy</span>
       <h2 class="name">T&ouml;regene</h2>
       <p class="desc">Mail, Drive, and the paid pile. Numbered plan first. Nothing mutates without an id.</p>
     </article>
-    <article class="card">
-      <a name="chagatai"></a>
+    <article class="card" id="chagatai">
       <span class="role">Inspector</span>
       <h2 class="name">Chagatai</h2>
       <p class="desc">Detects fleet health and reports it. He does not repair. Findings go to the Chief of Staff.</p>
@@ -362,32 +526,28 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<section class="decree" aria-label="04 The work">
+<section class="decree" id="work" aria-label="04 The work">
   <header class="decree-head">
     <span class="decree-num">04</span>
     <span class="decree-title">The work</span>
   </header>
   <div class="cards">
-    <article class="card">
-      <a name="batu"></a>
+    <article class="card" id="batu">
       <span class="role">Walker</span>
       <h2 class="name">Batu</h2>
       <p class="desc">Walks a prospect, writes the improve packet, and stops. He does not implement, commit, or deploy.</p>
     </article>
-    <article class="card">
-      <a name="ogedei"></a>
+    <article class="card" id="ogedei">
       <span class="role">Builder</span>
       <h2 class="name">Ogedei</h2>
       <p class="desc">Reads the packet, plans the critical and the high, and builds on a branch. Merge waits on approve.</p>
     </article>
-    <article class="card">
-      <a name="subutai"></a>
+    <article class="card" id="subutai">
       <span class="role">Coder</span>
       <h2 class="name">Subutai</h2>
       <p class="desc">The programmer. Features and fixes land as cloud-agent pull requests. Never a clone, never a push to main.</p>
     </article>
-    <article class="card">
-      <a name="berke"></a>
+    <article class="card" id="berke">
       <span class="role">Pruner</span>
       <h2 class="name">Berke</h2>
       <p class="desc">Reviews dead code. Each delete is proven before the PR. One Pruner. Deploy only after approve-deploy.</p>
@@ -395,14 +555,13 @@ footer a:hover{color:var(--gold)}
   </div>
 </section>
 
-<section class="decree" aria-label="05 The watch">
+<section class="decree" id="watch" aria-label="05 The watch">
   <header class="decree-head">
     <span class="decree-num">05</span>
     <span class="decree-title">The watch</span>
   </header>
-  <div class="cards">
-    <article class="card">
-      <a name="oljeitu"></a>
+  <div class="cards solo">
+    <article class="card" id="oljeitu">
       <span class="role">Grok Bot Researcher</span>
       <h2 class="name">&Ouml;ljeit&uuml;</h2>
       <p class="desc">Watches Grok Bot on YouTube. A numbered card, at most ten, last fourteen days. Study waits on a number.</p>
@@ -411,8 +570,13 @@ footer a:hover{color:var(--gold)}
   <p class="fineprint">Fourteen seats. Stamped by hand; may lag the sidebar. Hermes agents named Kublai and H&uuml;leg&uuml; sit elsewhere, and are not this roster.</p>
 </section>
 
-<footer>
+</main>
+
+<footer class="site-foot">
   <span>Kurultai</span>
+  <a href="https://roster.kurult.ai">roster.kurult.ai</a>
+  <span>Ordo of 19 August 2026</span>
+  <a href="/llms.txt">llms.txt</a>
   <a href="https://kurult.ai">kurult.ai</a>
   <a href="https://github.com/Danservfinn" rel="me">GitHub Danservfinn</a>
   <span>Raleigh, North Carolina</span>
