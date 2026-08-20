@@ -43,7 +43,13 @@ html{scroll-behavior:smooth}
     transition:none !important;
   }
   .hero,.ordo-wrap,.compact,.decree{opacity:1;transform:none}
-  .card:hover,.ordo-seat:hover{transform:none}
+  .card:hover{transform:none}
+  .ordo-seat:hover{
+    transform:
+      rotate(calc(var(--i) * (360deg / var(--n))))
+      translateY(calc(-1 * min(34vw,11.25rem)))
+      rotate(calc(var(--i) * (-360deg / var(--n))));
+  }
 }
 body{
   background:var(--void);
